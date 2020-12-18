@@ -1,5 +1,54 @@
 import {FaAngleDown} from 'react-icons/fa';
-import './style.css';
+import styled from 'styled-components';
+
+const Filter = styled.div`
+    width: 180px;
+    display: flex;
+    align-items: center;
+    background-color: ${props => props.theme.backgroundColor};
+    border-radius: 8px;
+    color: ${props => props.theme.color};
+    height: 60px;
+    -webkit-box-shadow: var(--webkit-box-shadow);
+    -moz-box-shadow: var(--moz-box-shadow);
+    box-shadow: var(--box-shadow);
+
+    .title-filter {
+        cursor: pointer;
+        font-weight: 600;
+        width: 100%;
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .regions {
+        padding: 10px 20px;
+        background-color: ${props => props.theme.backgroundColor};
+        border-radius: 8px;
+        width: 180px;
+        position: absolute;
+
+        margin-top: 310px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .region {
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 16px;
+        margin: 10px 0;
+        color: ${props => props.theme.color};
+        background-color: ${props => props.theme.backgroundColor};
+    }
+
+    .none {
+        display: none;
+    }
+`
 
 export default function FilterRegion() {
 
@@ -14,7 +63,7 @@ export default function FilterRegion() {
     }
 
     return(
-        <div id="container-filter">
+        <Filter id="container-filter">
             <div id='filter' onClick={handleRegions} className='title-filter'>
                 <span id='title-filter'>Filter by Region</span>
                 <FaAngleDown />
@@ -27,6 +76,6 @@ export default function FilterRegion() {
                 <button className='region' value="Europe">Europe</button>
                 <button className='region' value="Oceania">Oceania</button>
             </div>
-        </div>
+        </Filter>
     )
 }
