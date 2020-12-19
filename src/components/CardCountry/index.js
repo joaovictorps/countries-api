@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Label from '../Label';
 
 const Card = styled.div`
     background-color: ${props => props.theme.backgroundColor};
@@ -22,14 +23,11 @@ const Card = styled.div`
     .cardDescription > h2 {
         font-size: 22px;
         margin: 10px 0;
+        padding-left: 15px;
     }
 
-    .cardDescription > section > p {
+    .cardDescription > section > div {
         margin-bottom: 7px;
-    }
-
-    .cardDescription > section > p > span{
-        font-weight: 600;
     }
 `
 
@@ -40,9 +38,9 @@ export default function CardCountry() {
             <div className='cardDescription'>
                 <h2>Germany</h2>
                 <section >
-                    <p><span>Population: </span>81,770.900</p>
-                    <p><span>Region: </span>Europe</p>
-                    <p><span>Capital: </span>Berlin</p>
+                    <Label title='Population' values='81,770.900' />
+                    <Label title='Region' values='Europe' />
+                    <Label title='Capital' values='Berlin' />
                 </section>
             </div>
         </Card>
