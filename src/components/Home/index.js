@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Header from '../Header';
 import SearchInput from '../SearchInput';
 import FilterRegion from '../FilterRegion';
@@ -9,6 +9,8 @@ import { ThemeProvider } from 'styled-components';
 
 import * as themes from '../../styles/themes';
 import ThemeContext from '../../styles/themes/context';
+
+import api from '../../services/api';
 
 const Main = styled.main`
     background-color: ${props => props.theme.background};
@@ -59,11 +61,18 @@ const Main = styled.main`
 `
 
 export default function Home() {
+    const [countries, setCountries] = useState();
     const [theme, setTheme] = useState(themes.light);
 
     const toggleTheme = () => {
         setTheme(theme === themes.dark ? themes.light : themes.dark);
     };
+
+    useEffect(() => {
+        api.get('https://restcountries.eu/rest/v2/all?fields=name;capital;region;population;flag').then(res => {
+            setCountries(res.data);
+        });
+    }, []);
 
     return (
         <ThemeContext.Provider value={theme}>
@@ -78,10 +87,19 @@ export default function Home() {
                             </section>
 
                             <section id='countries'>
-                                <CardCountry />
-                                <CardCountry />
-                                <CardCountry />
-                                <CardCountry />
+                                {!countries ? 
+                                <h1>Loading...</h1> 
+                                : countries.map((country, index) => {
+                                    
+                                    return <CardCountry
+                                                key={index} 
+                                                name={country.name} 
+                                                capital={country.capital} 
+                                                region={country.region} 
+                                                population={country.population} 
+                                                flag={country.flag}
+                                            />
+                                })}
                             </section>
                         </Main>
                     </ThemeProvider>

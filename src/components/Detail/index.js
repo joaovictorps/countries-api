@@ -1,13 +1,14 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Header from '../Header';
 import Back from '../Back';
-import Label from '../Label';
 
 import { ThemeProvider } from 'styled-components';
 
 import * as themes from '../../styles/themes';
 import ThemeContext from '../../styles/themes/context';
+
+import api from '../../services/api';
 
 const Main = styled.main`
     background-color: ${props => props.theme.background};
@@ -44,6 +45,15 @@ const Main = styled.main`
 
     .section-label {
         margin-bottom: 35px;
+    }
+
+    .section-label > div > label {
+        color: ${props => props.theme.color};
+        font-weight: 800;
+    }
+
+    .section-label > div > label > span {
+        font-weight: 400;
     }
 
     .border-countries > label {
@@ -109,12 +119,41 @@ const Main = styled.main`
     }
 `
 
-export default function Detail() {
+export default function Detail(props) {
+    const [details, setDetails] = useState({});
     const [theme, setTheme] = useState(themes.light);
+
+    function transformArrayToString(values) {
+        console.log(values);
+
+        if(values.length === 1) return values[0].name;
+        
+        let string;
+
+        values.forEach(value =>{
+            if(string === undefined) {
+                string = value.name;
+
+            } else if(!value.name) {
+                return 
+            } else {
+                string= string + `, ${value.name}`;
+            } 
+        });
+        return string;
+    }
 
     const toggleTheme = () => {
         setTheme(theme === themes.dark ? themes.light : themes.dark);
     };
+
+    useEffect(() => {
+        console.log();
+        api.get(`https://restcountries.eu/rest/v2/name/${props.match.params.name}`).then(res => {
+            setDetails(res.data[0]);
+
+        })
+    }, [props.match.params.name]);
 
     return (
         <ThemeContext.Provider value={theme}>
@@ -128,47 +167,66 @@ export default function Detail() {
                                 <Back />
                             </section>
 
-                            <section className='content'>
-                                <img src='https://restcountries.eu/data/deu.svg' alt='Flag' />
+                            {!details? <h1>Loading...</h1>:
+                                <section className='content'>
+                                <img src={details.flag} alt='Flag' />
 
                                 <div className='description'>
-                                    <h2>Belgium</h2>
+                                    <h2>{details.name}</h2>
 
                                     <div className='sections'>
                                         <section className='section-label'>
-                                            <Label title='Native Name' values='Belgie' />
+                                            <div>
+                                                <label>Native Name: <span>{details.nativeName}</span></label>
+                                            </div>
 
-                                            <Label title='Population' values='11,319,511' />
+                                            <div>
+                                                <label>Population: <span>{details.population}</span></label>
+                                            </div>
 
-                                            <Label title='Region' values='Europe' />
+                                            <div>
+                                                <label>Region: <span>{details.region}</span></label>
+                                            </div>
 
-                                            <Label title='Sub Region' values='Western Europe' />
+                                            <div>
+                                                <label>Sub Region: <span>{details.subregion}</span></label>
+                                            </div>
 
-                                            <Label title='Capital' values='Brussels' />
+                                            <div>
+                                                <label>Capital: <span>{details.capital}</span></label>
+                                            </div>
+
                                         </section>
 
                                         <section className='section-label'>
-                                            <Label title='Top Level Domain' values='.be' />
 
-                                            <Label title='Currencies' values='Euro' />
+                                            <div>
+                                                <label>Top Level Domain: <span>{details.topLevelDomain}</span></label>
+                                            </div>
 
-                                            <Label title='Languages' values={['Dutch', 'French', 'Germany']} />
+                                            <div>
+                                                <label>Currencies: <span>{!details.currencies ? null : transformArrayToString(details.currencies)}</span></label>
+                                            </div>
+
+                                            <div>
+                                                <label>Languages: <span>{!details.languages ? null : transformArrayToString(details.languages)}</span></label>
+                                            </div> 
                                         </section>
                                     </div>
                                     <div className='border-countries'>
                                         <label>Border Countries:</label>
                                         <ul>
-                                            <li>France</li>
-                                            <li>Germany</li>
-                                            <li>Netherlands</li>
-                                            <li>Netherlands</li>
-                                            <li>Netherlands</li>
+                                           {!details.borders ? null : details.borders.map((border, index) => {
+                                               return <li key={index}>{border}</li>
+                                           })}
                                         </ul>
                                     </div>
 
                                 </div>
 
                             </section>
+                            }
+                            
                         </Main>
                     </ThemeProvider>
                 )}
