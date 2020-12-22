@@ -5,9 +5,9 @@ const Filter = styled.div`
     width: 180px;
     display: flex;
     align-items: center;
-    background-color: ${props => props.theme.backgroundColor};
+    background-color: ${props => props.theme.colors.backgroundColor};
     border-radius: 8px;
-    color: ${props => props.theme.color};
+    color: ${props => props.theme.colors.color};
     height: 60px;
     -webkit-box-shadow: var(--webkit-box-shadow);
     -moz-box-shadow: var(--moz-box-shadow);
@@ -25,7 +25,7 @@ const Filter = styled.div`
 
     .regions {
         padding: 10px 20px;
-        background-color: ${props => props.theme.backgroundColor};
+        background-color: ${props => props.theme.colors.backgroundColor};
         border-radius: 8px;
         width: 180px;
         position: absolute;
@@ -41,8 +41,8 @@ const Filter = styled.div`
         font-weight: 600;
         font-size: 16px;
         margin: 10px 0;
-        color: ${props => props.theme.color};
-        background-color: ${props => props.theme.backgroundColor};
+        color: ${props => props.theme.colors.color};
+        background-color: ${props => props.theme.colors.backgroundColor};
     }
 
     .none {

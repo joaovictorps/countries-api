@@ -6,8 +6,8 @@ const Search = styled.div`
     padding: 8px;
     width: 100%;
     max-width: 450px;
-    background-color: ${props => props.theme.backgroundColor};
-    color: ${props => props.theme.inputColor};
+    background-color: ${props => props.theme.colors.backgroundColor};
+    color: ${props => props.theme.colors.inputColor};
     display: flex;
     align-items: center;
     height: 60px;
@@ -17,8 +17,8 @@ const Search = styled.div`
     box-shadow: var(--box-shadow);
 
     .search-input {
-        color: ${props => props.theme.inputColor};
-        background-color: ${props => props.theme.backgroundColor};
+        color: ${props => props.theme.colors.inputColor};
+        background-color: ${props => props.theme.colors.backgroundColor};
         height: 100%;
         width: 100%;
     }

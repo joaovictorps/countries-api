@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const Card = styled.div`
     cursor: pointer;
-    background-color: ${props => props.theme.backgroundColor};
+    background-color: ${props => props.theme.colors.backgroundColor};
     height: 380px;
     max-width: 290px;
     border-radius: 8px;
@@ -23,7 +23,7 @@ const Card = styled.div`
     }
 
     .cardDescription {
-        color: ${props => props.theme.color};
+        color: ${props => props.theme.colors.color};
         padding: 0 15px;
     }
 
@@ -61,7 +61,7 @@ export default function CardCountry({name, capital, flag, population, region}) {
                 <section >
                     <div>
 
-                    <label>Population: <span>{Number(population)}</span></label>
+                    <label>Population: <span>{population}</span></label>
                     </div>
                 
                     <div>

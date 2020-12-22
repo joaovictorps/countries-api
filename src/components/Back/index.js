@@ -7,8 +7,8 @@ const Button = styled.button`
     width: 120px;
     height: 38px;
     border-radius: 8px;
-    background-color: ${props => props.theme.backgroundColor};
-    color: ${props => props.theme.inputColor};
+    background-color: ${props => props.theme.colors.backgroundColor};
+    color: ${props => props.theme.colors.inputColor};
 
     display: flex;
     align-items: center;
@@ -20,7 +20,7 @@ const Button = styled.button`
 
     .icon {
         margin-right: 10px;
-        color: ${props => props.theme.color};
+        color: ${props => props.theme.colors.color};
     }
 `
 

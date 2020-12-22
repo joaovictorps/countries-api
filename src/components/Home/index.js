@@ -5,15 +5,10 @@ import FilterRegion from '../FilterRegion';
 import CardCountry from '../CardCountry';
 import styled from 'styled-components';
 
-import { ThemeProvider } from 'styled-components';
-
-import * as themes from '../../styles/themes';
-import ThemeContext from '../../styles/themes/context';
-
 import api from '../../services/api';
 
 const Main = styled.main`
-    background-color: ${props => props.theme.background};
+    background-color: ${props => props.theme.colors.background};
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -60,13 +55,8 @@ const Main = styled.main`
     }
 `
 
-export default function Home() {
+function Home({toggleTheme}) {
     const [countries, setCountries] = useState();
-    const [theme, setTheme] = useState(themes.light);
-
-    const toggleTheme = () => {
-        setTheme(theme === themes.dark ? themes.light : themes.dark);
-    };
 
     useEffect(() => {
         api.get('https://restcountries.eu/rest/v2/all?fields=name;capital;region;population;flag').then(res => {
@@ -75,36 +65,32 @@ export default function Home() {
     }, []);
 
     return (
-        <ThemeContext.Provider value={theme}>
-            <ThemeContext.Consumer>
-                {theme => (
-                    <ThemeProvider theme={theme}>
-                        <Main id='main'>
-                            <Header toggleTheme={toggleTheme} theme={theme} themes={themes} />
-                            <section id='search-filter'>
-                                <SearchInput />
-                                <FilterRegion />
-                            </section>
 
-                            <section id='countries'>
-                                {!countries ? 
-                                <h1>Loading...</h1> 
-                                : countries.map((country, index) => {
-                                    
-                                    return <CardCountry
-                                                key={index} 
-                                                name={country.name} 
-                                                capital={country.capital} 
-                                                region={country.region} 
-                                                population={country.population} 
-                                                flag={country.flag}
-                                            />
-                                })}
-                            </section>
-                        </Main>
-                    </ThemeProvider>
-                )}
-            </ThemeContext.Consumer>
-        </ThemeContext.Provider>
+        <Main id='main'>
+            <Header toggleTheme={toggleTheme}/>
+            <section id='search-filter'>
+                <SearchInput />
+                <FilterRegion />
+            </section>
+
+            <section id='countries'>
+                {!countries ?
+                    <h1>Loading...</h1>
+                    : countries.map((country, index) => {
+
+                        return <CardCountry
+                            key={index}
+                            name={country.name}
+                            capital={country.capital}
+                            region={country.region}
+                            population={country.population}
+                            flag={country.flag}
+                        />
+                    })}
+            </section>
+        </Main>
+
     )
 }
+
+export default Home;

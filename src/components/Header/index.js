@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useContext} from 'react';
 import { BiMoon, BiSun } from 'react-icons/bi';
-import styled from 'styled-components';
+import styled, {ThemeContext} from 'styled-components';
 
 const Head = styled.header`
     display: flex;
@@ -8,8 +8,8 @@ const Head = styled.header`
     justify-content: center;
     width: 100%;
     height: 100px;
-    background-color: ${props => props.theme.backgroundColor};
-    color: ${props => props.theme.color};
+    background-color: ${props => props.theme.colors.backgroundColor};
+    color: ${props => props.theme.colors.color};
     -webkit-box-shadow: var(--webkit-box-shadow);
     -moz-box-shadow: var(--moz-box-shadow);
     box-shadow: var(--box-shadow);
@@ -50,18 +50,23 @@ const Head = styled.header`
     }
 `
 
-export default function Header({toggleTheme, theme, themes}) {
+export default function Header({toggleTheme}) {
+    const {title} = useContext(ThemeContext);
+
     return (
         <Head id='header'>
             <div>
                 <h1>Where in the world?</h1>
-                    {theme === themes.dark ? <span onClick={toggleTheme}>
-                    <BiSun className='moon' /> Light Mode
-                </span> : <span onClick={toggleTheme}>
-                    <BiMoon className='moon' /> Dark Mode
-                </span>}
-                
+                    { title === 'light' ?
+                        <span onClick={toggleTheme}>
+                            <BiSun className='sun' /> Light Mode
+                        </span> 
+                    : 
 
+                        <span onClick={toggleTheme}>
+                            <BiMoon className='moon' /> Dark Mode
+                        </span>
+                    }
             </div>
         </Head>
     )
