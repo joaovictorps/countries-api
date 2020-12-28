@@ -29,8 +29,11 @@ const Filter = styled.div`
         border-radius: 8px;
         width: 180px;
         position: absolute;
+        -webkit-box-shadow: var(--webkit-box-shadow);
+        -moz-box-shadow: var(--moz-box-shadow);
+        box-shadow: var(--box-shadow);
 
-        margin-top: 310px;
+        margin-top: 345px;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
@@ -50,7 +53,7 @@ const Filter = styled.div`
     }
 `
 
-export default function FilterRegion({filterAfrica, filterAmericas, filterAsia, filterEurope, filterOceania, handleRegions}) {
+export default function FilterRegion({filterAll, filterAfrica, filterAmericas, filterAsia, filterEurope, filterOceania, handleRegions}) {
 
     return(
         <Filter id="container-filter">
@@ -60,6 +63,7 @@ export default function FilterRegion({filterAfrica, filterAmericas, filterAsia, 
             </div>
 
             <div id='regions-filter' className='regions none'>
+                <button className='region' onClick={filterAll} >All</button>
                 <button className='region' onClick={filterAfrica} >Africa</button>
                 <button className='region' onClick={filterAmericas}>America</button>
                 <button className='region' onClick={filterAsia}>Asia</button>

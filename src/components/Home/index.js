@@ -61,15 +61,16 @@ function Home({toggleTheme}) {
     const [currentPage, setCurrentPage] = useState(1);
     const [countriesPerPage] = useState(36);
 
-
-
     useEffect(() => {
-        filterAll();
+        api.get('https://restcountries.eu/rest/v2/all?fields=name;capital;region;population;flag').then(res => {
+            setCountries(res.data); 
+        });
     }, []);
 
     const filterAll = () => {
         api.get('https://restcountries.eu/rest/v2/all?fields=name;capital;region;population;flag').then(res => {
             setCountries(res.data);
+            handleRegions();
         });
     }
 
@@ -147,6 +148,7 @@ function Home({toggleTheme}) {
                 <FilterRegion
                     handleRegions={handleRegions} 
                     filterAfrica={filterAfrica}
+                    filterAll={filterAll}
                     filterAmericas={filterAmericas}
                     filterAsia={filterAsia}
                     filterEurope={filterEurope}
