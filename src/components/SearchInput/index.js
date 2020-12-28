@@ -25,7 +25,6 @@ const Search = styled.div`
 
     .search-icon {
         margin: 0 20px;
-        cursor: pointer; 
     }
 
 
@@ -38,11 +37,11 @@ const Search = styled.div`
     }
 `
 
-export default function SearchInput() {
+export default function SearchInput({searchCountry}) {
     return(
         <Search className='container-search'>
             <AiOutlineSearch className='search-icon' size={24}/>
-            <input type='text' id='search-input' className='search-input' placeholder='Search for a country'/>
+            <input type='text' id='search-input' className='search-input'onChange={searchCountry} placeholder='Search for a country'/>
         </Search>
     )
 }

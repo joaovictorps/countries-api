@@ -50,17 +50,7 @@ const Filter = styled.div`
     }
 `
 
-export default function FilterRegion() {
-
-    function handleRegions() {
-        let regions = document.getElementById('regions-filter');
-
-        if(regions.classList.contains('none')){
-            regions.classList.remove('none');
-        } else {
-            regions.classList.add('none');
-        }
-    }
+export default function FilterRegion({filterAfrica, filterAmericas, filterAsia, filterEurope, filterOceania, handleRegions}) {
 
     return(
         <Filter id="container-filter">
@@ -70,11 +60,11 @@ export default function FilterRegion() {
             </div>
 
             <div id='regions-filter' className='regions none'>
-                <button className='region' value="Africa" >Africa</button>
-                <button className='region' value="America" >America</button>
-                <button className='region' value="Asia">Asia</button>
-                <button className='region' value="Europe">Europe</button>
-                <button className='region' value="Oceania">Oceania</button>
+                <button className='region' onClick={filterAfrica} >Africa</button>
+                <button className='region' onClick={filterAmericas}>America</button>
+                <button className='region' onClick={filterAsia}>Asia</button>
+                <button className='region' onClick={filterEurope}>Europe</button>
+                <button className='region' onClick={filterOceania}>Oceania</button>
             </div>
         </Filter>
     )

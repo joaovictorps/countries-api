@@ -18,7 +18,7 @@ const Card = styled.div`
         border-radius: 8px 8px 0 0;
     }
 
-    section {
+    .cardDescription > section {
         padding: 0;
     }
 
@@ -58,7 +58,7 @@ export default function CardCountry({name, capital, flag, population, region}) {
             <img src={flag} alt={`${name} Flag`}/>
             <div className='cardDescription'>
                 <h2>{name}</h2>
-                <section >
+                <section>
                     <div>
 
                     <label>Population: <span>{population}</span></label>
