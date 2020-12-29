@@ -56,80 +56,58 @@ const Main = styled.main`
     }
 `
 
-function Home({toggleTheme}) {
+function Home({ toggleTheme }) {
     const [countries, setCountries] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [countriesPerPage] = useState(36);
 
     useEffect(() => {
         api.get('https://restcountries.eu/rest/v2/all?fields=name;capital;region;population;flag').then(res => {
-            setCountries(res.data); 
+            setCountries(res.data);
         });
     }, []);
-
-    const filterAll = () => {
-        api.get('https://restcountries.eu/rest/v2/all?fields=name;capital;region;population;flag').then(res => {
-            setCountries(res.data);
-            handleRegions();
-        });
-    }
-
-    const filterAfrica = () => {
-        api.get('https://restcountries.eu/rest/v2/region/africa?fields=name;capital;region;population;flag').then(res => {
-            setCountries(res.data);
-            handleRegions();
-        });
-    }
-
-    const filterAmericas = () => {
-        api.get('https://restcountries.eu/rest/v2/region/Americas?fields=name;capital;region;population;flag').then(res => {
-            setCountries(res.data);
-            handleRegions();
-        });
-    }
-
-    const filterAsia = () => {
-        api.get('https://restcountries.eu/rest/v2/region/Asia?fields=name;capital;region;population;flag').then(res => {
-            setCountries(res.data);
-            handleRegions();
-        });
-    }
-
-    const filterEurope = () => {
-        api.get('https://restcountries.eu/rest/v2/region/europe?fields=name;capital;region;population;flag').then(res => {
-            setCountries(res.data);
-            handleRegions();
-        });
-    }
-
-    const filterOceania = () => {
-        api.get('https://restcountries.eu/rest/v2/region/Oceania?fields=name;capital;region;population;flag').then(res => {
-            setCountries(res.data);
-            handleRegions();
-        });
-    }
 
     const searchCountry = () => {
         let inputValue = document.getElementById('search-input').value;
 
-        if(inputValue.length >= 3  ) {
+        if (inputValue.length >= 3) {
             api.get(`https://restcountries.eu/rest/v2/name/${inputValue}`).then(res => {
                 setCountries(res.data);
+                paginate(1);
             });
         }
 
-        if(inputValue.length === 0) {
-            filterAll();
+        if (inputValue.length === 0) {
+            api.get('https://restcountries.eu/rest/v2/all?fields=name;capital;region;population;flag').then(res => {
+                setCountries(res.data);
+            });
         }
     }
 
     const handleRegions = () => {
         let regions = document.getElementById('regions-filter');
 
-        if(regions.classList.contains('none')){
+        if (regions.classList.contains('none')) {
             regions.classList.remove('none');
         } else {
             regions.classList.add('none');
+        }
+    }
+
+    const filter = (event) => {
+        const filterName = event.target.innerHTML;
+        if (filterName === 'All') {
+            api.get('https://restcountries.eu/rest/v2/all?fields=name;capital;region;population;flag').then(res => {
+                setCountries(res.data);
+                handleRegions();
+                paginate(1);
+            });
+        } else {
+            api.get(`https://restcountries.eu/rest/v2/region/${filterName}?fields=name;capital;region;population;flag`).then(res => {
+                setCountries(res.data);
+                handleRegions();
+                paginate(1);
+            })
         }
     }
 
@@ -142,26 +120,27 @@ function Home({toggleTheme}) {
     return (
 
         <Main id='main'>
-            <Header toggleTheme={toggleTheme}/>
+            <Header toggleTheme={toggleTheme} />
             <section id='search-filter'>
-                <SearchInput searchCountry={searchCountry}/>
+                <SearchInput searchCountry={searchCountry} />
                 <FilterRegion
-                    handleRegions={handleRegions} 
-                    filterAfrica={filterAfrica}
-                    filterAll={filterAll}
-                    filterAmericas={filterAmericas}
-                    filterAsia={filterAsia}
-                    filterEurope={filterEurope}
-                    filterOceania={filterOceania}
+                    handleRegions={handleRegions}
+                    filter={filter}
                 />
             </section>
 
+            <Pagination
+                countriesPerPage={countriesPerPage}
+                totalCountries={countries.length}
+                paginate={paginate}
+            />
+
             <Countries countries={currentCountries} />
 
-            <Pagination 
-                countriesPerPage={countriesPerPage} 
+            <Pagination
+                countriesPerPage={countriesPerPage}
                 totalCountries={countries.length}
-                paginate={paginate} 
+                paginate={paginate}
             />
 
         </Main>

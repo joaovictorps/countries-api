@@ -53,7 +53,7 @@ const Filter = styled.div`
     }
 `
 
-export default function FilterRegion({filterAll, filterAfrica, filterAmericas, filterAsia, filterEurope, filterOceania, handleRegions}) {
+export default function FilterRegion({filter, handleRegions}) {
 
     return(
         <Filter id="container-filter">
@@ -63,12 +63,12 @@ export default function FilterRegion({filterAll, filterAfrica, filterAmericas, f
             </div>
 
             <div id='regions-filter' className='regions none'>
-                <button className='region' onClick={filterAll} >All</button>
-                <button className='region' onClick={filterAfrica} >Africa</button>
-                <button className='region' onClick={filterAmericas}>America</button>
-                <button className='region' onClick={filterAsia}>Asia</button>
-                <button className='region' onClick={filterEurope}>Europe</button>
-                <button className='region' onClick={filterOceania}>Oceania</button>
+                <button className='region' onClick={filter} >All</button>
+                <button className='region' onClick={filter} >Africa</button>
+                <button className='region' onClick={filter}>Americas</button>
+                <button className='region' onClick={filter}>Asia</button>
+                <button className='region' onClick={filter}>Europe</button>
+                <button className='region' onClick={filter}>Oceania</button>
             </div>
         </Filter>
     )

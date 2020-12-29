@@ -28,6 +28,10 @@ const Pagination = ({ countriesPerPage, totalCountries, paginate }) => {
     for(let i = 1; i <= Math.ceil(totalCountries / countriesPerPage); i++) {
         pageNumbers.push(i);
     }
+
+    if(totalCountries.length <= 1) {
+        return null
+    }
     
     return(
         <nav>
